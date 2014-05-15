@@ -1,0 +1,46 @@
+nuget {
+	nuspec {
+		id = luafilesystem;
+		title: LuaFileSystem;
+		version: 1.6.1.1;
+		authors: {coapp, Kepler Project, Andrew Starks, Tightrope Media Systems};
+		owners: {Puc-Rio};
+		licenseUrl: "http://www.lua.org/license.html";
+		licenseUrl: "http://opensource.org/licenses/MIT";
+		releaseNotes: {"Initial coapp release, fixes for 5.3 Work 1/2"}; 
+		requireLicenseAcceptance:false;
+		summary: "File system facilities for Lua 5.1, 5.2 and 5.3.";
+		copyright: "Copyright © 2003-2014 Kepler Project";
+		tags: {native, Lua, module, filesystem};
+		description: {@"LuaFileSystem is a Lua library developed to complement the set of 
+		functions related to file systems offered by the standard Lua distribution.
+
+		LuaFileSystem offers a portable way to access the underlying directory structure and 
+		file attributes.";}
+	};
+
+	dependencies {
+        // This node defines any outside items which may be needed to consume this package.
+        packages : {
+            // This is a list of other NuGet packages required to use this package.
+            // Each item follows the format "<pkg_name>/<version>"
+            lua/"[5.2, 5.4)",
+        };
+    };
+
+	files {
+		docs : {
+			#destination = {"${d_docs}\luafilesystem"};
+			{".\doc\**\*.*"};
+		};
+
+		[x64, v100] {
+        	bin: {"x64\Release\*.dll"};
+        	//pdb: {x64\Release\*.pdb};
+        };
+        [win32, v100]{
+        	bin: {"Win32\Release\*.dll"};
+        	//pdb: {"Win32\Release\*.pdb"};
+        }
+    };
+}
