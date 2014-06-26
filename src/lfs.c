@@ -280,7 +280,7 @@ static int lfs_lock_dir(lua_State *L) {
   return 1;
 }
 static int lfs_unlock_dir(lua_State *L) {
-  lfs_Lock *lock = luaL_checkudata(L, 1, LOCK_METATABLE);
+  lfs_Lock *lock = (lfs_Lock *) luaL_checkudata(L, 1, LOCK_METATABLE);
   if(lock->fd != INVALID_HANDLE_VALUE) {    
     CloseHandle(lock->fd);
     lock->fd=INVALID_HANDLE_VALUE;
@@ -648,8 +648,8 @@ static int file_utime (lua_State *L) {
         if (lua_gettop (L) == 1) /* set to current date/time */
                 buf = NULL;
         else {
-                utb.actime = (time_t)luaL_optnumber (L, 2, 0);
-                utb.modtime = (time_t)luaL_optnumber (L, 3, utb.actime);
+                utb.actime = (time_t)luaL_optinteger (L, 2, 0);
+                utb.modtime = (time_t)luaL_optinteger (L, 3, utb.actime);
                 buf = &utb;
         }
         if (utime (file, buf)) {
@@ -668,43 +668,43 @@ static void push_st_mode (lua_State *L, STAT_STRUCT *info) {
 }
 /* device inode resides on */
 static void push_st_dev (lua_State *L, STAT_STRUCT *info) {
-        lua_pushnumber (L, (lua_Number)info->st_dev);
+        lua_pushinteger (L, (lua_Integer)info->st_dev);
 }
 /* inode's number */
 static void push_st_ino (lua_State *L, STAT_STRUCT *info) {
-        lua_pushnumber (L, (lua_Number)info->st_ino);
+        lua_pushinteger (L, (lua_Integer)info->st_ino);
 }
 /* number of hard links to the file */
 static void push_st_nlink (lua_State *L, STAT_STRUCT *info) {
-        lua_pushnumber (L, (lua_Number)info->st_nlink);
+        lua_pushinteger (L, (lua_Integer)info->st_nlink);
 }
 /* user-id of owner */
 static void push_st_uid (lua_State *L, STAT_STRUCT *info) {
-        lua_pushnumber (L, (lua_Number)info->st_uid);
+        lua_pushinteger (L, (lua_Integer)info->st_uid);
 }
 /* group-id of owner */
 static void push_st_gid (lua_State *L, STAT_STRUCT *info) {
-        lua_pushnumber (L, (lua_Number)info->st_gid);
+        lua_pushinteger (L, (lua_Integer)info->st_gid);
 }
 /* device type, for special file inode */
 static void push_st_rdev (lua_State *L, STAT_STRUCT *info) {
-        lua_pushnumber (L, (lua_Number)info->st_rdev);
+        lua_pushinteger (L, (lua_Integer)info->st_rdev);
 }
 /* time of last access */
 static void push_st_atime (lua_State *L, STAT_STRUCT *info) {
-        lua_pushnumber (L, info->st_atime);
+        lua_pushinteger (L, info->st_atime);
 }
 /* time of last data modification */
 static void push_st_mtime (lua_State *L, STAT_STRUCT *info) {
-        lua_pushnumber (L, info->st_mtime);
+        lua_pushinteger (L, info->st_mtime);
 }
 /* time of last file status change */
 static void push_st_ctime (lua_State *L, STAT_STRUCT *info) {
-        lua_pushnumber (L, info->st_ctime);
+        lua_pushinteger (L, info->st_ctime);
 }
 /* file size, in bytes */
 static void push_st_size (lua_State *L, STAT_STRUCT *info) {
-        lua_pushnumber (L, (lua_Number)info->st_size);
+        lua_pushinteger (L, (lua_Integer) info->st_size);
 }
 #ifndef _WIN32
 /* blocks allocated for file */

@@ -27,8 +27,8 @@
     <None Include="doc\us\index.html" />
     <None Include="doc\us\license.html" />
     <None Include="doc\us\manual.html" />
-    <None Include="packages.config" />
     <None Include="luafilesystem.autopkg" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\lfs.h">
