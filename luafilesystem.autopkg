@@ -4,6 +4,7 @@ nuget {
 		title: LuaFileSystem;
 		version: 1.6.2.1;
 		authors: {coapp, Kepler Project, Tightrope Media Systems};
+
 		owners: {Puc-Rio};
 		licenseUrl: "http://www.lua.org/license.html";
 		licenseUrl: "http://opensource.org/licenses/MIT";
@@ -35,6 +36,7 @@ nuget {
 		};
 		
 		mypdb: {
+
             // copies the whole folder tree.
             #add-all-files : Items.lfsPdb;
             // set the destination in the package itself. 
@@ -52,6 +54,7 @@ nuget {
         };
 		
         [win32, v100, Release] {
+
         	bin:   Win32\Release\lfs.dll;
         	mypdb: Win32\Release\lfs.pdb;
         }
