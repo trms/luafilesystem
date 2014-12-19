@@ -2,8 +2,8 @@ nuget {
 	nuspec {
 		id = luafilesystem;
 		title: LuaFileSystem;
-		version: 1.6.1.3;
-		authors: {coapp, Kepler Project, Andrew Starks, Tightrope Media Systems};
+		version: 1.6.2.1;
+		authors: {coapp, Kepler Project, Tightrope Media Systems};
 		owners: {Puc-Rio};
 		licenseUrl: "http://www.lua.org/license.html";
 		licenseUrl: "http://opensource.org/licenses/MIT";
@@ -24,7 +24,7 @@ nuget {
         packages : {
             // This is a list of other NuGet packages required to use this package.
             // Each item follows the format "<pkg_name>/<version>"
-            lua/"[5.3.0003.02, 5.4)",
+            lua/"[5.3.0004.01, 5.4)",
         };
     };
 
@@ -33,14 +33,43 @@ nuget {
 			#destination = {"${d_docs}\luafilesystem"};
 			{".\doc\**\*.*"};
 		};
-
-		[x64, v100] {
-        	bin: {"x64\Release\*.dll"};
-        	//pdb: {x64\Release\*.pdb};
+		
+		mypdb: {
+            // copies the whole folder tree.
+            #add-all-files : Items.lfsPdb;
+            // set the destination in the package itself. 
+			#destination : ${build_root}\${conditionFolder}\pdbs;
         };
-        [win32, v100]{
-        	bin: {"Win32\Release\*.dll"};
-        	//pdb: {"Win32\Release\*.pdb"};
+
+		[x64, v100, Release] {
+        	bin:   x64\Release\lfs.dll;
+        	mypdb: x64\Release\lfs.pdb;
+        };
+		
+		[x64, v100, Debug] {
+        	bin:   x64\Debug\lfs.dll;
+        	mypdb: x64\Debug\lfs.pdb;
+        };
+		
+        [win32, v100, Release] {
+        	bin:   Win32\Release\lfs.dll;
+        	mypdb: Win32\Release\lfs.pdb;
+        }
+		
+		[win32, v100, Debug] {
+        	bin:   Win32\Debug\lfs.dll;
+        	mypdb: Win32\Debug\lfs.pdb;
         }
     };
+	
+	targets {	
+		AfterBuild {
+			.Copy {
+				DestinationFolder = "$(TargetDir)";
+				SourceFiles = "@(lfsPdb)";
+				SkipUnchangedFiles = true;
+				UseHardlinksIfPossible = true;
+			};
+		};
+	};
 }
